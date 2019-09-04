@@ -14,7 +14,7 @@
       left-icon="phone-o"
       placeholder="请输入手机号"></van-field>
       <van-field
-      v-validate="'required|digits:11'"
+      v-validate="'required|digits:6'"
       name="code"
       :error-message="errors.first('code')"
       v-model="user.code"
@@ -46,14 +46,20 @@ export default {
     ...mapMutations(['setUser']),
     async handleLogin () {
       try {
-        // data就是返回的数据，拦截器做了处理
-        const data = await login(this.user)
-        console.log(data)
-        // 储存登录状态到vuex
-        this.setUser(data)
-        // 跳转到首页
-        this.$router.push('/')
-        this.$toast.success('登陆成功')
+        // 表单验证  不发送请求
+        this.$validator.validate().then(async valid => {
+          // 验证失败
+          if (!valid) {
+            return
+          }
+          // 验证成功
+          const data = await login(this.user)
+          // 储存登录状态
+          this.setUser(data)
+          // 跳转到首页
+          this.$router.push('/')
+          this.$toast.success('登陆成功')
+        })
       } catch (err) {
         console.log(err)
         this.$toast.success('登陆失败')
