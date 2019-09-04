@@ -31,10 +31,15 @@ export default {
   methods: {
     async handleLogin () {
       try {
-        const res = await login(this.user)
-        console.log(res)
+        // data就是返回的数据，拦截器做了处理
+        const data = await login(this.user)
+        console.log(data)
+        // 跳转到首页
+        this.$router.push('/')
+        this.$toast.success('登陆成功')
       } catch (err) {
         console.log(err)
+        this.$toast.success('登陆失败')
       }
     }
   }
