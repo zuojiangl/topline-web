@@ -18,7 +18,7 @@
 
 <script>
 import { login } from '@/api/user'
-
+import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -29,11 +29,14 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUser']),
     async handleLogin () {
       try {
         // data就是返回的数据，拦截器做了处理
         const data = await login(this.user)
         console.log(data)
+        // 储存登录状态到vuex
+        this.setUser(data)
         // 跳转到首页
         this.$router.push('/')
         this.$toast.success('登陆成功')
