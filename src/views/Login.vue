@@ -11,18 +11,30 @@
       </van-field>
     </van-cell-group>
     <div class="login-btn">
-      <van-button class="van-btn" type="info">登录</van-button>
+      <van-button class="van-btn" type="info" @click="handleLogin">登录</van-button>
     </div>
   </div>
 </template>
 
 <script>
+import { login } from '@/api/user'
+
 export default {
   data () {
     return {
       user: {
         mobile: '13911111111',
         code: '246810'
+      }
+    }
+  },
+  methods: {
+    async handleLogin () {
+      try {
+        const res = await login(this.user)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
       }
     }
   }

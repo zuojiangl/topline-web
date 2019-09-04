@@ -7,7 +7,7 @@ const instance = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn'
 })
 
-instance.dafaults.transformResponse = [function (data) {
+instance.defaults.transformResponse = [function (data) {
   try {
     // data数据可能不是标准的JSON格式字符串，否则会导致JSONbig.parse(data)转换失败报错
     return JSONbig.parse(data)
