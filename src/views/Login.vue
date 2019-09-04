@@ -18,7 +18,6 @@
       name="code"
       :error-message="errors.first('code')"
       v-model="user.code"
-      required
       clearable
       left-icon="lock"
       placeholder="请输入验证码">
@@ -60,6 +59,24 @@ export default {
         this.$toast.success('登陆失败')
       }
     }
+  },
+  created () {
+    const dict = {
+      custom: {
+        // 验证的文本框
+        mobile: {
+          // 验证规则失败后的提示信息
+          required: '请输入手机号码',
+          digits: '手机号码必须是11位数字'
+        },
+        code: {
+          // 验证规则失败后的提示信息
+          required: '请输入验证码',
+          digits: '验证码必须是6位数字'
+        }
+      }
+    }
+    this.$validator.localize('custom', dict)
   }
 }
 </script>
